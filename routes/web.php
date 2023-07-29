@@ -17,5 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/qq', function () {
     return view('welcome');
 });
-Route::resource('/', ContactController::class);
+Route::resource('/contacts', ContactController::class);
 
+Route::post('/search', [ContactController::class, 'search'])->name("ajax_search_contact");

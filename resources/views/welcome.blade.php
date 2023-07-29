@@ -18,11 +18,11 @@
       
        
         
-    <div class="container mx-auto  mt-4">
+    <div class="container mx-auto  mt-4 page">
         <h1 class="text-[35px]">Liste des contacts</h1>
         <div class="flex justify-between items-center">
-            <input type="text" name="first-name"  placeholder="Recherche..." class="block rounded-md py-[5px] w-[40%] mt-4  bg-[#ffffff] text-gray-800 placeholder:text-gray-400 placeholder:px-2 placeholder:text  focus:ring-2  focus:ring-inset ">
-            <a href="#" class='text-white btn text-center  py-1.5 px-3.5 rounded-md '>+ Ajouter</a>
+            <input type="text" name="first-name" id="searchInput"  placeholder="Recherche..." class="block rounded-md py-[5px] w-[40%] mt-4  bg-[#ffffff] text-gray-800 placeholder:text-gray-400 placeholder:px-2 placeholder:text  focus:ring-2  focus:ring-inset ">
+            <a href="#" class='text-white btn text-center  py-1.5 px-3.5 rounded-md show-modal '>+ Ajouter</a>
         </div>
         
         <div class="mt-4" >
@@ -37,7 +37,7 @@
                     </tr>
 
                 </thead>
-                <tbody class="bg-white" >
+                <tbody class="bg-white" id="tableBody">
                     @foreach ($contacts as $contact)
                         <tr >
                             <td class="border-t border-b p-3 text-sm w-[40%]">{{$contact->nom}} {{$contact->prenom }}</td>
@@ -72,8 +72,16 @@
     </div>
    {{--  <a class='text-white btn text-center  py-1.5 px-3.5 rounded-md show-modal'>+ Ajouter</a> --}}
    @include('modal')
-
+   <script src="{{asset('assets/js/jquery-3.7.0.min.js') }}"></script>
+   <?php
     
+    $imageUrlDelete = asset('assets/icons/bin.png');
+    $imageUrlEdit = asset('assets/icons/pen.png');
+    $imageUrlView = asset('assets/icons/eye.png');
+    ?>
+        {{-- scripts ajax --}}
+        @include('scripts')
        @vite('resources/js/app.js')
+    
     </body>
 </html>

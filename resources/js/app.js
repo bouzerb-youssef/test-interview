@@ -1,9 +1,20 @@
 import './bootstrap';
 
 const modal =document.querySelector(".modal");
-const showModel =document.querySelector(".show-modal");
+const showModal =document.querySelector(".show-modal");
+const closeModal =document.querySelector(".close-modal");
 
-showModel.addEventListener('click' , function () {
-    console.log("uiiukjgjhg")
+showModal.addEventListener('click' , function () {
+    const page = document.querySelector(".page");
     modal.classList.remove('hidden');
 })
+
+closeModal.addEventListener('click' , function () {
+    const page = document.querySelector(".page");
+    modal.classList.add('hidden');
+})
+
+
+
+
+

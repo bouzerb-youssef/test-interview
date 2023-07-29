@@ -19,11 +19,12 @@ class ContactRequest extends FormRequest
         return [
             'prenom' => 'required|string|regex:/^[a-zA-Z]+$/',
             'nom' => 'required|string|regex:/^[a-zA-Z]+$/',
-            'e_mail' => 'required|email',
-            'cle' => 'required|string|alpha_num',
+            'email' => 'required|email',
+            'entreprise' => 'required',
             'code_postal' => 'nullable|numeric',
             'ville' => 'nullable|string|alpha',
-            'organisation_id' => 'required|exists:organisations,id',
+            'statut' =>'required'
+            
         ];
     }
 }
