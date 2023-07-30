@@ -8,6 +8,8 @@ use App\Models\Contact;
 use App\Models\Organisation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+
 class ContactController extends Controller
 {
     /**
@@ -28,17 +30,21 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         
-       $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'prenom' => 'required|string|regex:/^[a-zA-Z]+$/',
             'nom' => 'required|string|regex:/^[a-zA-Z]+$/',
-            'email' => 'required|email',
+           'email' => 'required|email',
             'entreprise' => 'required',
-            "adresse"=>'required',
-            'code_postal' => 'nullable|numeric',
-            'ville' => 'nullable|string|alpha',
-            'statut' =>'required'
+            'adresse' => 'required',
+            'code_postal' => 'required|numeric',
+            'ville' => 'required|string',
+            'statut' => 'required', 
         ]);
- 
+    
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+    
       $organisation=  Organisation::create([
 
             "nom"=>$request->entreprise,
@@ -50,7 +56,7 @@ class ContactController extends Controller
             "cle" =>Str::uuid()
 
         ]);
-       
+        return response()->json($organisation);
      $contact=   Contact::create([
 
             "nom"=>$request->nom,
@@ -61,7 +67,7 @@ class ContactController extends Controller
 
         ]);
         
-        return response()->json(['message' => 'Contact created successfully!'], 200);
+        return view("welcome");
         
     }
 

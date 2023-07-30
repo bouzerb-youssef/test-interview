@@ -44,34 +44,54 @@
 
  {{-- ajouter a contact using ajax --}}
  <script>
-     // Wait for the DOM to be ready
+     
      $(document).ready(function () {
-       // Add a submit event listener to the form
-       $('#contact-form').on('submit', function (event) {
-         event.preventDefault(); // Prevent the default form submission
-   
-         // Serialize the form data
-         const formData = $(this).serialize();
-         
+       $('#contact-form .add_contact' ).on('click',function (event) {
+         event.preventDefault(); 
+          //remove old error message after click on submit .
+          let fieldNames =["nom" ,"prenom","email","adresse","entreprise","code_postal","ville","statut"];
+          fieldNames.forEach(function(fieldName){
+               $(`[name="${fieldName}"] + .error-message`).remove();
+          });
+
+         let nom =$('#nom').val();
+         let prenom =$('#prenom').val();
+         let email =$('#email').val();
+         let adresse =$('#adresse').val();
+         let entreprise =$('#entreprise').val();
+         let code_postal =$('#code_postal').val();
+         let ville =$('#ville').val();
+         let statut =$('#statut').val();
+
          // Submit the form using AJAX
          $.ajax({
-           url: '{{route("contacts.store")}}', // Form action URL
+           url: '{{route("contacts.store")}}', 
            type: 'POST',
-           data: { formData: formData , "_token":"{{ csrf_token()}}"},
-           dataType: 'json', // Expected response type (change to 'html' if the server responds with HTML)
+           data:  {nom:nom ,prenom:prenom,email:email ,adresse:adresse,entreprise:entreprise ,code_postal:code_postal,ville:ville ,statut:statut,"_token":"{{ csrf_token()}}"} ,
+          
+           dataType: 'json', 
            success: function (data) {
-             // Handle the response here, if needed
-             console.log(data);
-             // For example, you can redirect to a new page after successful submission:
+             
+             console.log("gdfhsdfg here");
+             
            
            },
-           error: function (xhr, status, error) {
+           error: function ( error) {
+               console.log(error)
+               if (error.status === 422 && error.responseJSON && error.responseJSON.errors) {
+                
+               let errors =error.responseJSON.errors;
+               
+                    Object.keys(errors).forEach(function (field) {
+                    const errorMessage = errors[field][0];
+                    $(`[name="${field}"]`).after(`<span class="text-red-600 text-xs error-message">${errorMessage}</span>`);
 
-               console.log("here");
-             console.error('Error:', error);
-             // Handle errors, display them, etc.
-           }
+               });
+           }}
          });
        });
+       //remove error message when you click submit button .
+     
+
      });
    </script>
