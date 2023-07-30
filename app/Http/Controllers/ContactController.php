@@ -44,8 +44,9 @@ class ContactController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-    
-      $organisation=  Organisation::create([
+    try{
+        
+        $organisation= Organisation::create([
 
             "nom"=>$request->entreprise,
             
@@ -53,21 +54,35 @@ class ContactController extends Controller
             "code_postal"=>$request->code_postal,
             "ville"=>$request->ville,
             "statut"=>$request->statut,
-            "cle" =>Str::uuid()
+            "cle" =>Str::random(32),
 
         ]);
-        return response()->json($organisation);
-     $contact=   Contact::create([
+          
+           Contact::create([
 
-            "nom"=>$request->nom,
-            "prenom"=>$request->prenom,
-            "email"=>$request->email,
-            "organisation_id"=> $organisation->id,
-            "cle" =>Str::uuid()
-
-        ]);
+                "nom"=>$request->nom,
+                "prenom"=>$request->prenom,
+                "e_mail"=>$request->email,
+                "organisation_id"=> $organisation->id,
+                "cle" =>Str::random(32),
+                'telephone_fixe'=>'',
+                'service'=>'',
+                'fonction'=>'',
         
-        return view("welcome");
+            ]);
+         
+        return response()->json(['success' => true, 'url' => route('contacts.index')]);
+
+    }catch (\Exception $e) {
+        $errorMessage = $e->getMessage(); 
+        return response()->json(['status' => 'error', 'message' => 'Error creating modal: ' . $errorMessage], 500);
+
+        
+    }
+
+      
+     
+       
         
     }
 
@@ -100,7 +115,7 @@ class ContactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        dd($id);
     }
 
 

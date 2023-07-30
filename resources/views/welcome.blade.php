@@ -53,13 +53,38 @@
                             </span>
                         </td>
                             <td class="border-t border-b p-3 text-sm flex gap-2">
-                            <a class="show-modal"  ><img src="{{ asset('assets/icons/eye.png') }}" class="w-[20px] hover:scale-110"    alt="Icon"></a> 
-                                <a ><img src="{{ asset('assets/icons/pen.png') }}" class="w-[20px] hover:scale-110"  alt="Icon"></a>
-                                <a ><img src="{{ asset('assets/icons/bin.png') }}" class="w-[20px] hover:scale-110"  alt="Icon"></a>
+                                <a class="show-modal-view view-contact-form "
+                                    data-bs-toggle="model"
+                                    data-bs-toggle="#view-model"
+                                    data-id="{{$contact->id}}"
+                                    data-nom="{{$contact->nom}}"
+                                    data-prenom="{{$contact->prenom}}"
+                                    data-email="{{$contact->e_mail}}"
+                                    data-entreprise="{{$contact->organisation->nom}}"
+                                    data-adresse="{{$contact->organisation->adresse}}"
+                                    data-code_postal="{{$contact->organisation->code_postal}}"
+                                    data-ville="{{$contact->organisation->ville}}"
+                                    data-statut="{{$contact->organisation->statut }}"    
+                                ><img src="{{ asset('assets/icons/eye.png') }}" class="w-[20px] hover:scale-110"    alt="Icon"></a> 
+
+                                <a class="show-modal-update update-contact-form "
+                                    data-bs-toggle="model"
+                                    data-bs-toggle="#update-model"
+                                    data-id="{{$contact->id}}"
+                                    data-nom="{{$contact->nom}}"
+                                    data-prenom="{{$contact->prenom}}"
+                                    data-email="{{$contact->e_mail}}"
+                                    data-entreprise="{{$contact->organisation->nom}}"
+                                    data-adresse="{{$contact->organisation->adresse}}"
+                                    data-code_postal="{{$contact->organisation->code_postal}}"
+                                    data-ville="{{$contact->organisation->ville}}"
+                                    data-statut="{{$contact->organisation->statut }}"
+                                 ><img src="{{ asset('assets/icons/pen.png') }}" class="w-[20px] hover:scale-110"  alt="Icon"></a>
+                                <a  ><img src="{{ asset('assets/icons/bin.png') }}" class="w-[20px] hover:scale-110"  alt="Icon"></a>
 
                             </td>
                         </tr>
-                        
+                       
                     @endforeach
                     
                     
@@ -70,8 +95,13 @@
             </div>
         </div>
     </div>
-   {{--  <a class='text-white btn text-center  py-1.5 px-3.5 rounded-md show-modal'>+ Ajouter</a> --}}
+    {{-- modals html --}}
+   @include('update-modal')
+   @include('view-modal')
    @include('modal')
+   @include('modalAlertsuprimmer')
+   
+
    <script src="{{asset('assets/js/jquery-3.7.0.min.js') }}"></script>
    <?php
     
@@ -79,6 +109,7 @@
     $imageUrlEdit = asset('assets/icons/pen.png');
     $imageUrlView = asset('assets/icons/eye.png');
     ?>
+    
         {{-- scripts ajax --}}
         @include('scripts')
        @vite('resources/js/app.js')

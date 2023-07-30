@@ -1,4 +1,4 @@
-<div class="modal h-screen w-full fixed top-0 left-0 flex justify-center items-center  hidden    ">
+<div class="modal h-screen w-full fixed top-0 left-0 flex justify-center items-center hidden    ">
     
   <form  id="contact-form">
     @csrf
